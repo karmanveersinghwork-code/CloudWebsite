@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Cloud CRUD</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-brand">Cloud CRUD</div>
+    <div class="nav-links">
+      <a href="#" id="logoutBtn">Logout</a>
+    </div>
+  </nav>
+  <main class="container">
+    <section class="upload-section">
+      <h2>Upload New File</h2>
+      <form id="uploadForm">
+        <input type="file" id="fileInput" required />
+        <button type="submit" class="btn">Upload</button>
+      </form>
+      <div id="uploadMessage"></div>
+    </section>
+    <section class="files-section">
+      <h2>Your Files</h2>
+      <div id="filesList" class="cards-container"></div>
+    </section>
+  </main>
+
+  <!-- modal for version list -->
+  <div id="versionModal" class="modal">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h3>Versions</h3>
+      <ul id="versionsList"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
