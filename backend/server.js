@@ -20,10 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // middleware
-app.use(cors({
-  origin: ['http://localhost:5500', 'http://localhost:5000'], // allow frontend ports
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -39,17 +36,22 @@ app.use(
 // static files (optional, serve frontend from backend if desired)
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// register routes under /api to match frontend requests
-app.use('/api/auth', authRoutes);
-console.log('Registered /api/auth routes');
-app.use('/api/files', fileRoutes);
-console.log('Registered /api/files routes');
+// register routes
+app.use('/auth', authRoutes);
+console.log('Registered /auth routes');
+app.use('/files', fileRoutes);
+console.log('Registered /files routes');
+
+// simple health check
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
 
 // catch 404
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
