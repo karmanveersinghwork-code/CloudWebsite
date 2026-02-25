@@ -13,14 +13,14 @@ const session = require('express-session');
 const path = require('path');
 
 const authRoutes = require('./routes/auth');
-// use the new fileRoutes module (routes/fileRoutes.js)
+// file routes
 const fileRoutes = require('./routes/fileRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// middleware
-app.use(cors());
+// middleware: enable CORS with credentials (allows cookies)
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -33,16 +33,17 @@ app.use(
   })
 );
 
-// static files (optional, serve frontend from backend if desired)
+// static files (optional)
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// register routes
-app.use('/auth', authRoutes);
-console.log('Registered /auth routes');
+// register routes both at /files and /api/files so both frontend variants work
 app.use('/files', fileRoutes);
-console.log('Registered /files routes');
+app.use('/api/files', fileRoutes);
+app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
+console.log('Registered file and auth routes');
 
-// simple health check
+// health check
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
