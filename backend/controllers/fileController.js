@@ -20,6 +20,7 @@ const BUCKET = process.env.AWS_BUCKET;
 const s3 = new S3Client({ region: REGION });
 
 exports.listFiles = async (req, res) => {
+  console.log('listFiles called by', req.ip || req.hostname, 'bucket=', BUCKET);
   try {
     if (!BUCKET) {
       console.error('AWS_BUCKET not configured');
