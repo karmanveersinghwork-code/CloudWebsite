@@ -106,3 +106,14 @@ exports.listVersions = async (req, res) => {
     res.status(500).json({ error: 'Failed to list versions' });
   }
 };
+
+// Provide aliases to match route handler names expected by routes/fileRoutes.js
+exports.getFile = async (req, res) => {
+  console.log('getFile called for', req.params.filename);
+  return exports.downloadFile(req, res);
+};
+
+exports.getVersions = async (req, res) => {
+  console.log('getVersions called for', req.params.filename);
+  return exports.listVersions(req, res);
+};

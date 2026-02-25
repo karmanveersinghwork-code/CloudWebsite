@@ -5,7 +5,8 @@ const session = require('express-session');
 const path = require('path');
 
 const authRoutes = require('./routes/auth');
-const fileRoutes = require('./routes/files');
+// use the new fileRoutes module (routes/fileRoutes.js)
+const fileRoutes = require('./routes/fileRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -30,8 +31,11 @@ app.use(
 // static files (optional, serve frontend from backend if desired)
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+// register routes under /api to match frontend requests
 app.use('/api/auth', authRoutes);
+console.log('Registered /api/auth routes');
 app.use('/api/files', fileRoutes);
+console.log('Registered /api/files routes');
 
 // catch 404
 app.use((req, res) => {
