@@ -79,6 +79,11 @@ README.md
 - The backend uses the AWS SDK v3; credentials are retrieved from the environment or IAM role.
 - Do **not** hardcode AWS secrets in source code.
 
+### Node.js requirement
+
+- This project requires Node.js v14 or newer. If you see a syntax error referencing `??` or "Unexpected token '?'," please upgrade Node.js to v14+ (v16+ recommended).
+- Install Node.js from https://nodejs.org/ or use nvm to manage versions.
+
 ## Notes
 
 - The authentication system is a simple mock and should not be used in production.

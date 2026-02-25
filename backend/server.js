@@ -1,3 +1,11 @@
+// Ensure Node.js version is compatible before loading dependencies
+const semver = process.versions.node.split('.').map(n => parseInt(n, 10));
+const major = semver[0] || 0;
+if (major < 14) {
+  console.error(`ERROR: Node.js ${process.versions.node} detected. This project requires Node.js v14 or later. Please upgrade Node.js and try again: https://nodejs.org/`);
+  process.exit(1);
+}
+
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
