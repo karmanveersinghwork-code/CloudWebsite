@@ -7,6 +7,8 @@ async function request(url, options = {}) {
   }
   return resp.json().catch(() => ({}));
 }
+// API base URL (set to your backend IP/port)
+const API_URL = 'http://100.30.206.208:5000';
 
 // login page logic
 if (document.getElementById('loginForm')) {
@@ -96,9 +98,17 @@ if (document.getElementById('logoutBtn')) {
     } else if (action === 'delete') {
       if (!confirm('Are you sure you want to delete this file?')) return;
       try {
-        await request(`/api/files/delete/${encodeURIComponent(key)}`, {
-          method: 'DELETE'
+        const resp = await fetch(`${API_URL}/files/${encodeURIComponent(key)}`, {
+          method: 'DELETE',
+          credentials: 'include'
         });
+        if (!resp.ok) {
+          let errBody = {};
+          try { errBody = await resp.json(); } catch (e) {}
+          throw new Error(errBody.error || resp.statusText || 'Delete failed');
+        }
+        // show success and refresh
+        alert('Delete successful');
         loadFiles();
       } catch (err) {
         alert(err.message);
